@@ -1,0 +1,313 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SOD_CS_Library</name>
+    </assembly>
+    <members>
+        <member name="M:SOD_CS_Library.Device.SetDeviceInformation(System.Double,System.Double,System.Double,System.Double,System.Double,System.String,System.Boolean)">
+            <summary>
+            Helper function to define some of the more important information for the device.
+            </summary>
+            <param name="width">Width of the device, in mm</param>
+            <param name="depth">Height of the device, in mm</param>
+            <param name="locationX">X coordinate of the location of device</param>
+            <param name="locationY">Y coordinate of the location of device (not used until 3D implementation)</param>
+            <param name="locationZ">Z coordinate of the location of device</param>
+            <param name="deviceType">Type of the device, eg. "table"</param>
+            <param name="stationary">Whether the device is stationary, determines if orientation data is relevant</param>
+        </member>
+        <member name="T:SOD_CS_Library.Person">
+            <summary>
+            Class to store people received from server.
+            </summary>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.WidthMetersToPixels(System.Double,SOD_CS_Library.Projector.Surface)">
+            <summary>
+            Convert width or x coordinate from meters to pixels
+            </summary>
+            <param name="x">The value of the x coordinate/width in meters</param>
+            <param name="surface">The surface the point exists on</param>
+            <returns></returns>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.HeightMetersToPixels(System.Double,SOD_CS_Library.Projector.Surface)">
+            <summary>
+            Convert height or y coordinate from meters to pixels
+            </summary>
+            <param name="y">The value of the y coordinate/width in meters</param>
+            <param name="surface">The surface the point exists on</param>
+            <returns></returns>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.DrawCircleOnWindow(System.String,System.Double,System.Double,System.Double,System.String,System.Int32,System.String,System.Int32,System.String)">
+            <summary>
+            This call draws a new circle on the window and adds its 
+            element number (elementNo) to the list of elements for the specified window with given name for later use. 
+            </summary>
+            <param name="windowNo">The ID of the window that the circle will be drawn on</param>
+            <param name="x">The x coordinate of the circle center point on the window in meters</param>
+            <param name="y">The y coordinate of the circle center point on the window in meters</param>
+            <param name="radius">The radius of the circle in meters</param>
+            <param name="lineColour">The outline colour of the circle. Colors should be passed in as an "r:g:b:α" string where the values of r, g, b and α are between 0 and 1.</param>
+            <param name="lineWidth">The width of the outline for the circle.</param>
+            <param name="fillColour">The fill colour of the circle. Colors should be passed in as an "r:g:b:α" string where the values of r, g, b and α are between 0 and 1.</param>
+            <param name="sides">The number of sides the circle has (this deﬁnes the quality of the circle).</param>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.MoveCircleOnWindow(System.String,System.String,System.Double,System.Double)">
+            <summary>
+            This moves the circle with the given element number to the given position on the window.
+            </summary>
+            <param name="name">The given name of the circle to be moved</param>
+            <param name="elementNo">The ID of the circle to be moved</param>
+            <param name="new_x">The new x position of the circle center point on the window in meters</param>
+            <param name="new_y">The new y position of the circle center point on the window in meters</param>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.TransferCircleOnWindow(System.String,System.String,System.Double,System.Double,System.Int32)">
+            <summary>
+            This shows the image transfering from its position to the given new position.
+            </summary>
+            <param name="type">The type of element being transfered</param>
+            <param name="elementNo">The ID of the element bring transfered</param>
+            <param name="new_x">The new x position of the element on the window in meters</param>
+            <param name="new_y">The new y position of the element on the window in meters</param>
+            <param name="speed">The speed of transfer for the element</param>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.DrawRectangleOnWindow(System.String,System.Double,System.Double,System.Double,System.Double,System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Draw a new rectangle element on the given window and adds its 
+            element number (elementNo) to the list of elements for the specified window with given name for later use. 
+            </summary>
+            <param name="windowNo">The ID of the window that the rectangle will be drawn on</param>
+            <param name="x">The x coordinate of the top left corner for the new rectangle in meters</param>
+            <param name="y">The y coordinate of the top left corner for the new rectangle in meters</param>
+            <param name="height">The height of the rectangle in meters</param>
+            <param name="width">The width of the rectangle in meters</param>
+            <param name="lineColour">The border colour of the rectangle.  Colors should be passed in as an "r:g:b:α" string where the values of r, g, b and α are between 0 and 1.</param>
+            <param name="lineWidth">The thickness of the border given as an int value</param>
+            <param name="fillColour">The fill colour of the rectangle.  Colors should be passed in as an "r:g:b:α" string where the values of r, g, b and α are between 0 and 1.</param>
+            <param name="name"></param>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.MoveRectangleOnWindow(System.String,System.Double,System.Double,System.String)">
+            <summary>
+            This moves the rectangle with the given element number to the given position on the window.
+            </summary>
+            <param name="elementNo">The ID of the rectangle to be moved</param>
+            <param name="new_x">The x coordinate of the top left corner for the new position in meters</param>
+            <param name="new_y">The y coordinate of the top left corner for the new position in meters</param>
+            <param name="name">The given name of the rectangle</param>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.TransferRectangleOnWindow(System.String,System.Double,System.Double,System.String,System.Int32)">
+            <summary>
+            This shows the rectangle with the given element number moving to the given position on the window.
+            </summary>
+            <param name="elementNo">The ID of the rectangle to be moved</param>
+            <param name="new_x">The x coordinate of the top left corner for the new position in meters</param>
+            <param name="new_y">The y coordinate of the top left corner for the new position in meters</param>
+            <param name="name">The given name of the rectangle</param>
+            <param name="speed">The speed the rectangle will travel at</param>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.DrawImageOnWindow(System.String,System.Double,System.Double,System.Double,System.Double,System.String,System.String,System.String)">
+            <summary>
+            Draws a new image element on the given window and adds its 
+            element number (elementNo) to the list of elements for the specified window with given name for later use. 
+            </summary>
+            <param name="windowNo">The ID of the window that the rectangle will be drawn on</param>
+            <param name="x">The x coordinate of the top left corner for the new image in meters</param>
+            <param name="y">The y coordinate of the top left corner for the new image in meters</param>
+            <param name="height">The height of the image in meters</param>
+            <param name="width">The width of the image in meters</param>
+            <param name="image">The base64 string representation of the image to be added</param>
+            <param name="image_extension">The extension of the image file to be added</param>
+            <param name="name">The name of the image</param>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.MoveImageOnWindow(System.String,System.Double,System.Double,System.String)">
+            <summary>
+            This moves the image with the given element number to the given position on the window.
+            </summary>
+            <param name="elementNo">The ID of the image to be moved</param>
+            <param name="new_x">The x coordinate of the top left corner for the new position in meters</param>
+            <param name="new_y">The y coordinate of the top left corner for the new position in meters</param>
+            <param name="name">The given name of the image</param>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.TransferImageOnWindow(System.String,System.Double,System.Double,System.String,System.Int32,System.Action{System.String})">
+            <summary>
+            This shows the image with the given element number moving to the given position on the window.
+            </summary>
+            <param name="elementNo">The ID of the image to be moved</param>
+            <param name="new_x">The x coordinate of the top left corner for the new position in meters</param>
+            <param name="new_y">The y coordinate of the top left corner for the new position in meters</param>
+            <param name="name">The given name of the image</param>
+            <param name="speed">The speed the image will travel at</param>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.DrawLineOnWindow(System.String,System.Double,System.Double,System.Double,System.Double,System.String,System.Double,System.String)">
+            <summary>
+            Draw a new line element on the given window and add its 
+            element number (elementNo) to the list of elements for the specified window with given name for later use. 
+            </summary>
+            <param name="windowNo">The ID of the window that the line will be drawn on</param>
+            <param name="x_start">The x coordinate of the start position for the line in meters</param>
+            <param name="y_start">The y coordinate of the start position for the line in meters</param>
+            <param name="x_end">The x coordinate of the end position for the line in meters</param>
+            <param name="y_end">The y coordinate of the end position for the line in meters</param>
+            <param name="colour">The colour of the line. Colors should be passed in as an "r:g:b:α" string where the values of r, g, b and α are between 0 and 1</param>
+            <param name="width">The width of the line in pixels</param>
+            <param name="name">The given name of the line.</param>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.SOD_CS_Library#ITransferSpeed#Slow(System.String,System.String,System.Double,System.Double,System.Action{System.String})">
+            <summary>
+            Transfer a given element with speed option of Slow.
+            </summary>
+            <param name="type">The name of the element to be moved</param>
+            <param name="elementNo">The ID of the element to be moved</param>
+            <param name="new_x">The new x position of the element on the window</param>
+            <param name="new_y">The new y position of the element on the window</param>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.SOD_CS_Library#ITransferSpeed#Moderate(System.String,System.String,System.Double,System.Double,System.Action{System.String})">
+            <summary>
+            Transfer a given element with speed option of Moderate.
+            </summary>
+            <param name="type">The name of the element to be moved</param>
+            <param name="elementNo">The ID of the element to be moved</param>
+            <param name="new_x">The new x position of the element on the window</param>
+            <param name="new_y">The new y position of the element on the window</param>
+        </member>
+        <member name="M:SOD_CS_Library.Projector.SOD_CS_Library#ITransferSpeed#Fast(System.String,System.String,System.Double,System.Double,System.Action{System.String})">
+            <summary>
+            Transfer a given element with speed option of Fast.
+            </summary>
+            <param name="type">The name of the element to be moved</param>
+            <param name="elementNo">The ID of the element to be moved</param>
+            <param name="new_x">The new x position of the element on the window</param>
+            <param name="new_y">The new y position of the element on the window</param>
+        </member>
+        <member name="P:SOD_CS_Library.Projector.TransferElementWithSpeed">
+            <summary>
+            Transfer a given element with speed options of Slow, Moderate or Fast.
+            </summary>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.#ctor(System.String,System.Int32)">
+            <summary>
+            Create socket client using IP and port provided by user, then subscribe to Socket.IO events.
+            </summary>
+            <param name="IP">IP address of the server</param>
+            <param name="port">Port number of the server, usually 3000</param>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.SocketConnect">
+            <summary>
+            Connect the socket to the server (using the IP and port provided in constructor)
+            </summary>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.RegisterDevice">
+            <summary>
+            Register the device with server.
+            </summary>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.ConnectToProjector">
+            <summary>
+            Connect the device to the Projector.
+            </summary>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.SocketError(System.Object,SocketIOClient.ErrorEventArgs)">
+            <summary>
+            Error event
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.SocketConnectionClosed(System.Object,System.EventArgs)">
+            <summary>
+            Connection closed event
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.SocketMessage(System.Object,SocketIOClient.MessageEventArgs)">
+            <summary>
+            Event handler for any unhandled events
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.SocketOpened(System.Object,System.EventArgs)">
+            <summary>
+            Connection opened event
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.Close">
+            <summary>
+            Close socket connection, dispose of event handlers, then dispose socket itself.
+            </summary>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.ReconnectToServer">
+            <summary>
+            Check if socket is connected, and if it's not, attempt to reconnect
+            </summary>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.GetAllTrackedPeople(System.Action{System.Collections.Generic.List{SOD_CS_Library.Person}})">
+            <summary>
+            Returns a list of all people tracked by the server,  passed as an argument to the specified callback.
+            </summary>
+            <param name="completionCB">Code block to be executed once list is returned, since server is asynchronous</param>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.GetDevicesWithSelection(System.String,System.Action{System.Collections.Generic.List{SOD_CS_Library.Device}})">
+            <summary>
+            Returns a list of devices specified in "selection", passed as an argument to the specified callback.
+            </summary>
+            <param name="selection">Devices must with this criteria to be returned in the list (eg. "all", "inView")</param>
+            <param name="completionCB">Code block to be executed once list is returned, since server is asynchronous</param>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.GetDeviceByID(System.Int32,System.Action{SOD_CS_Library.Device})">
+            <summary>
+            Returns a device with specified ID, if it exists, passed as an argument to the specified callback.
+            </summary>
+            <param name="ID">ID of the device to be searched for</param>
+            <param name="completionCB">Code block to be executed once list is returned, since server is asynchronous</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:SOD_CS_Library.SOD.updateDeviceInfo(System.Collections.Generic.Dictionary{System.String,System.String})" -->
+        <member name="M:SOD_CS_Library.SOD.pairingWithPerson(System.Int32,System.Int32)">
+            <summary>
+            pairing ownDevice with with that person's ID 
+            </summary>
+            <param name="personID">person's ID (ie : personID = 0)</param>
+            <param name="deviceID">device's ID (ie : deviceID = 101)</param>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.UnpairDevice">
+            <summary>
+            Tell server to unpair this device
+            </summary>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.UnpairAllDevices">
+            <summary>
+            Tell server to unpair all devices, used mainly for testing/debugging
+            </summary>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.UnpairAllPeople">
+            <summary>
+            Tell server to unpair all people, used mainly for testing/debugging
+            </summary>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.RequestDataFromSelection(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Send a request to one or more devices, defined by "selection".  Event "requestedData" should be handled to receive the data.
+            </summary>
+            <param name="requestName">Name of the data you want from each target device</param>
+            <param name="selection">Devices must with this criteria to be returned in the list (eg. "all", "inView")</param>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.RequestDataFromSelection(System.String,System.Object,System.Collections.Generic.List{System.String})">
+            <summary>
+            Send a request to one or more devices, defined by "selection".  Event "requestedData" should be handled to receive the data.
+            </summary>
+            <param name="requestName">Name of the data you want from each target device</param>
+            <param name="selection">Devices must with this criteria to be returned in the list (eg. "all", "inView")</param>
+        </member>
+        <member name="M:SOD_CS_Library.SOD.SendAcknowledgementWithPID(System.Int32,System.Object)">
+            <summary>
+            Since SocketIO4Net does not implement an acknowledge method, we implement our own. We create a new message of type AckMessage,
+            defining the ackID and the data/msg to be sent. The ackID is necessary for the server to match an acknowledge with the original message
+            being acknowledged (and therefore execute the correct callback)
+            </summary>
+            <param name="PID">ID of the original message, also the ID used as acknowledge ID</param>
+            <param name="data">data/msg/object to be sent back as a reply</param>
+        </member>
+    </members>
+</doc>
