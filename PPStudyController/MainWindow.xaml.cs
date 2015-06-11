@@ -561,7 +561,7 @@ namespace PPStudyController
                 {
                     foreach (KeyValuePair<string, Projector.Window> window in s.Value.windows)
                     {
-                        SoD.SODProjector.DrawLineOnWindow(window.Value.ID, (participant.location.X + xoffset), (participant.location.Z + yoffset), (Convert.ToDouble(CurrentDisplay.Value.locationX) + xoffset), (Convert.ToDouble(CurrentDisplay.Value.locationZ) + yoffset), "1:1:1:1", 10, "line", 
+                        SoD.SODProjector.DrawLineOnWindow(window.Value.ID, (participant.location.Z + yoffset), (participant.location.X + xoffset), (Convert.ToDouble(CurrentDisplay.Value.locationZ) + yoffset), (Convert.ToDouble(CurrentDisplay.Value.locationX) + xoffset), "1:1:1:1", 10, "line", 
                             (elementID) => {
                             // send to display
                             if (CurrentTask == 1)
@@ -637,11 +637,11 @@ namespace PPStudyController
                         // draw a circle on the selected window
                         var path = System.IO.Path.GetFullPath("image.png");
                         System.Drawing.Image img = System.Drawing.Image.FromFile(path);
-                        SoD.SODProjector.DrawImageOnWindow(window.Value.ID.ToString(), p1, p2, 0.5, 0.5, SoD.SODProjector.ImageToBase64(img, img.RawFormat), ".png", "info", 
+                        SoD.SODProjector.DrawImageOnWindow(window.Value.ID.ToString(), p2, p1, 0.5, 0.5, SoD.SODProjector.ImageToBase64(img, img.RawFormat), ".png", "info", 
                             (elementID) =>
                         {
                             // transfer to display location
-                            MoveImageToLocation(p3, p4);
+                            MoveImageToLocation(p4, p3);
                         });
                     }
                 }
@@ -666,7 +666,7 @@ namespace PPStudyController
                             var path = System.IO.Path.GetFullPath("image.png");
                             System.Drawing.Image img = System.Drawing.Image.FromFile(path);
 
-                            SoD.SODProjector.DrawImageOnWindow(window.Value.ID.ToString(), (Convert.ToDouble(CurrentDataPoint.locationX) + xoffset), (Convert.ToDouble(CurrentDataPoint.locationZ) + yoffset), Convert.ToDouble(CurrentDataPoint.width), Convert.ToDouble(CurrentDataPoint.height), SoD.SODProjector.ImageToBase64(img, img.RawFormat), ".png", "info", 
+                            SoD.SODProjector.DrawImageOnWindow(window.Value.ID.ToString(), (Convert.ToDouble(CurrentDataPoint.locationZ) + yoffset), (Convert.ToDouble(CurrentDataPoint.locationX) + xoffset), Convert.ToDouble(CurrentDataPoint.width), Convert.ToDouble(CurrentDataPoint.height), SoD.SODProjector.ImageToBase64(img, img.RawFormat), ".png", "info", 
                                 (elementID) =>
                                 {
                                     persistent = SoD.SODProjector.room.Elements[elementID];
