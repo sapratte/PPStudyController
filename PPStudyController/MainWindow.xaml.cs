@@ -58,9 +58,9 @@ namespace PPStudyController
         static bool _deviceIsStationary = true;     // If mobile device, assign false.
         static double _deviceWidthInM = 1          // Device width in metres
                         , _deviceHeightInM = 1.5   // Device height in metres
-                        , _deviceLocationX = 1     // Distance in metres from the sensor which was first connected to the server
+                        , _deviceLocationX = 8     // Distance in metres from the sensor which was first connected to the server
                         , _deviceLocationY = 1      // Distance in metres from the sensor which was first connected to the server
-                        , _deviceLocationZ = 1      // Distance in metres from the sensor which was first connected to the server
+                        , _deviceLocationZ = 8      // Distance in metres from the sensor which was first connected to the server
                         , _deviceOrientation = 0    // Device orientation in Degrees, if mobile device, 0.
                         , _deviceFOV = 70;           // Device Field of View in degrees
 
@@ -344,6 +344,13 @@ namespace PPStudyController
         int CurrentTask = 0;
         int CurrentRound = 0;
         int AttemptNumber = 0;
+        int personID = 0;
+
+        bool demo_mode = false;
+
+        // SoD coordinate offset
+        double xoffset = 0.5;
+        double yoffset = -0.7;
 
         List<string> rounds = new List<string>();
 
@@ -369,6 +376,8 @@ namespace PPStudyController
         private string GenerateFileName()
         {
             string filename = LogDirectory;
+            if (demo_mode)
+                filename += "DEMO-";
             filename += ParticipantID;
             filename += "-";
             filename += "T" + CurrentTask;
@@ -404,7 +413,6 @@ namespace PPStudyController
                 participant_log.Text = participant_log.Text + "\n" + str;
                 scrollviewer.ScrollToBottom();
             }));
-            
         }
 
         #endregion
@@ -432,6 +440,12 @@ namespace PPStudyController
 
             // get displays info
             GetDisplayInofrmation();
+
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+                participant_log.Text = participant_log.Text + "\nGot room and displays.";
+                scrollviewer.ScrollToBottom();
+            }));
         }
 
         private void Setup_Click(object sender, RoutedEventArgs e)
@@ -485,11 +499,13 @@ namespace PPStudyController
 
         #region Projection Stuff 
 
+        private double convert(double p, double offset)
+        {
+            return (p + offset);
+        }
+
         private void SetUpProjectionSpace()
         {
-            // TODO: rotate surface twice
-
-
             // add windows to the room for drawing
             Add_Windows();
         }
@@ -501,6 +517,11 @@ namespace PPStudyController
             {
                 Projector.Surface surface = s.Value;
                 SoD.SODProjector.AddWindow(surface.ID, 0, 0, surface.height, surface.width, surface.type + "_window");
+                this.Dispatcher.Invoke((Action)(() =>
+                {
+                    participant_log.Text = participant_log.Text + "\nGot window with height: " + surface.height + " and width: " + surface.width;
+                    scrollviewer.ScrollToBottom();
+                }));
             }
         }
 
@@ -512,8 +533,7 @@ namespace PPStudyController
                 // draw at participant location
                 if (rounds[CurrentRound] == "real-time")
                 {
-
-                    DrawImageAtLocationAndMoveRealTime(participant.location.X, participant.location.Z, Convert.ToDouble(CurrentDisplay.Value.locationX), Convert.ToDouble(CurrentDisplay.Value.locationZ));
+                    DrawImageAtLocationAndMoveRealTime((participant.location.X + xoffset), (participant.location.Z + yoffset), (Convert.ToDouble(CurrentDisplay.Value.locationX) + xoffset), (Convert.ToDouble(CurrentDisplay.Value.locationZ) + yoffset));
                 }
                 else if (rounds[CurrentRound] == "persistent")
                 {
@@ -541,7 +561,8 @@ namespace PPStudyController
                 {
                     foreach (KeyValuePair<string, Projector.Window> window in s.Value.windows)
                     {
-                        SoD.SODProjector.DrawLineOnWindow(window.Value.ID, participant.location.X, participant.location.Y, Convert.ToDouble(CurrentDisplay.Value.locationX), Convert.ToDouble(CurrentDisplay.Value.locationZ), "1:1:1:1", 10, "line", (elementID) => {
+                        SoD.SODProjector.DrawLineOnWindow(window.Value.ID, (participant.location.X + xoffset), (participant.location.Z + yoffset), (Convert.ToDouble(CurrentDisplay.Value.locationX) + xoffset), (Convert.ToDouble(CurrentDisplay.Value.locationZ) + yoffset), "1:1:1:1", 10, "line", 
+                            (elementID) => {
                             // send to display
                             if (CurrentTask == 1)
                             {
@@ -616,7 +637,8 @@ namespace PPStudyController
                         // draw a circle on the selected window
                         var path = System.IO.Path.GetFullPath("image.png");
                         System.Drawing.Image img = System.Drawing.Image.FromFile(path);
-                        SoD.SODProjector.DrawImageOnWindow(window.Value.ID.ToString(), p1, p2, 0.5, 0.5, SoD.SODProjector.ImageToBase64(img, img.RawFormat), ".png", "info", (elementID) =>
+                        SoD.SODProjector.DrawImageOnWindow(window.Value.ID.ToString(), p1, p2, 0.5, 0.5, SoD.SODProjector.ImageToBase64(img, img.RawFormat), ".png", "info", 
+                            (elementID) =>
                         {
                             // transfer to display location
                             MoveImageToLocation(p3, p4);
@@ -644,13 +666,7 @@ namespace PPStudyController
                             var path = System.IO.Path.GetFullPath("image.png");
                             System.Drawing.Image img = System.Drawing.Image.FromFile(path);
 
-                            double x = 0;
-                            if (Convert.ToDouble(CurrentDataPoint.locationX) < 0)
-                                x = Convert.ToDouble(CurrentDataPoint.locationX) * -1;
-                            else 
-                                x = Convert.ToDouble(CurrentDataPoint.locationX);
-
-                            SoD.SODProjector.DrawImageOnWindow(window.Value.ID.ToString(), x, Convert.ToDouble(CurrentDataPoint.locationZ), Convert.ToDouble(CurrentDataPoint.width), Convert.ToDouble(CurrentDataPoint.height), SoD.SODProjector.ImageToBase64(img, img.RawFormat), ".png", "info", 
+                            SoD.SODProjector.DrawImageOnWindow(window.Value.ID.ToString(), (Convert.ToDouble(CurrentDataPoint.locationX) + xoffset), (Convert.ToDouble(CurrentDataPoint.locationZ) + yoffset), Convert.ToDouble(CurrentDataPoint.width), Convert.ToDouble(CurrentDataPoint.height), SoD.SODProjector.ImageToBase64(img, img.RawFormat), ".png", "info", 
                                 (elementID) =>
                                 {
                                     persistent = SoD.SODProjector.room.Elements[elementID];
@@ -669,7 +685,7 @@ namespace PPStudyController
             {
                 // draw at participant location
                 if (rounds[CurrentRound] == "real-time")
-                    DrawImageAtLocationAndMoveRealTime(Convert.ToDouble(CurrentDisplay.Value.locationX), Convert.ToDouble(CurrentDisplay.Value.locationZ), participant.location.X, participant.location.Z);
+                    DrawImageAtLocationAndMoveRealTime((Convert.ToDouble(CurrentDisplay.Value.locationX) + xoffset), (Convert.ToDouble(CurrentDisplay.Value.locationZ) + yoffset), (participant.location.X + xoffset), (participant.location.Z + yoffset));
                 else if (rounds[CurrentRound] == "persistent")
                 {
                     // draw path
@@ -732,18 +748,14 @@ namespace PPStudyController
                 if (people.Count != 0)
                 {
                     // get participant location
-                    participant = people[0];
-
-                    callback(participant);
-                    //double px = ((2.2 - (participant.location.X + 1.1)) * (512 / 2.2));
-                    //double py = ((participant.location.Z - 0.9) * (512 / 3));
-                    //Point p = new Point(participant.location.X, participant.location.Z);
-
-                    //if ((p.Y > 0) && (p.Y < 50))
-                    //{
-                    //    Dictionary<String, String> payload = new Dictionary<string, string>();
-                    //    //SoD.SendToDevices.WithID(projectionAPIId, "InitLevel0", payload);
-                    //}
+                    for (int i = 0; i < people.Count; i++)
+                    {
+                        if (people[i].ID == person_id.Text)
+                        {
+                            participant = people[i];
+                            callback(participant);
+                        }
+                    }
                 }
 
             });
@@ -769,6 +781,23 @@ namespace PPStudyController
         private void Window_Closed(object sender, EventArgs e)
         {
             disconnectSoD();
+        }
+
+        
+
+        private void demo_button_Checked(object sender, RoutedEventArgs e)
+        {
+            demo_mode = true;
+        }
+
+        private void demo_button_Unchecked(object sender, RoutedEventArgs e)
+        {
+            demo_mode = false;
+        }
+
+        private void set_person_button_Click(object sender, RoutedEventArgs e)
+        {
+            personID = Convert.ToInt32(person_id.Text);
         }
     }
 }
