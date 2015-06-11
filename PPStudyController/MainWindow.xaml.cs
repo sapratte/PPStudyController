@@ -690,7 +690,7 @@ namespace PPStudyController
                             var path = System.IO.Path.GetFullPath("image.png");
                             System.Drawing.Image img = System.Drawing.Image.FromFile(path);
 
-                            SoD.SODProjector.DrawImageOnWindow(window.Value.ID.ToString(), (Convert.ToDouble(data_point_z.Text) + yoffset), (Convert.ToDouble(data_point_x.Text) + xoffset), 0.75, 0.75, SoD.SODProjector.ImageToBase64(img, img.RawFormat), ".png", "info",
+                            SoD.SODProjector.DrawImageOnWindow(window.Value.ID.ToString(), (Convert.ToDouble(data_point_z.Text) + yoffset), (Convert.ToDouble(data_point_x.Text) + xoffset), 0.5, 0.5, SoD.SODProjector.ImageToBase64(img, img.RawFormat), ".png", "info",
                                 (elementID) =>
                                 {
                                     persistent = SoD.SODProjector.room.Elements[elementID];
