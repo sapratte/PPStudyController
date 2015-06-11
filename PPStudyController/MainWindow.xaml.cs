@@ -650,11 +650,34 @@ namespace PPStudyController
 
         private void DrawDataPoint()
         {
-            // get data point
-            SoD.GetDataPoints((dataPoint) =>
-            {
-                CurrentDataPoint = dataPoint;
+            //// get data point
+            //SoD.GetDataPoints((dataPoint) =>
+            //{
+            //    CurrentDataPoint = dataPoint;
 
+            //    // draw datapoint
+            //    foreach (KeyValuePair<string, Projector.Surface> s in SoD.SODProjector.room.Surfaces)
+            //    {
+            //        if (s.Value.type == "Floor")
+            //        {
+            //            foreach (KeyValuePair<string, Projector.Window> window in s.Value.windows)
+            //            {
+            //                // draw a image information at datapoint
+            //                var path = System.IO.Path.GetFullPath("image.png");
+            //                System.Drawing.Image img = System.Drawing.Image.FromFile(path);
+
+            //                SoD.SODProjector.DrawImageOnWindow(window.Value.ID.ToString(), (Convert.ToDouble(CurrentDataPoint.locationZ) + yoffset), (Convert.ToDouble(CurrentDataPoint.locationX) + xoffset), Convert.ToDouble(CurrentDataPoint.width), Convert.ToDouble(CurrentDataPoint.height), SoD.SODProjector.ImageToBase64(img, img.RawFormat), ".png", "info", 
+            //                    (elementID) =>
+            //                    {
+            //                        persistent = SoD.SODProjector.room.Elements[elementID];
+            //                    });
+            //            }
+            //        }
+            //    }
+            //});
+
+            this.Dispatcher.Invoke((Action)(() =>
+            {
                 // draw datapoint
                 foreach (KeyValuePair<string, Projector.Surface> s in SoD.SODProjector.room.Surfaces)
                 {
@@ -662,11 +685,12 @@ namespace PPStudyController
                     {
                         foreach (KeyValuePair<string, Projector.Window> window in s.Value.windows)
                         {
+                        
                             // draw a image information at datapoint
                             var path = System.IO.Path.GetFullPath("image.png");
                             System.Drawing.Image img = System.Drawing.Image.FromFile(path);
 
-                            SoD.SODProjector.DrawImageOnWindow(window.Value.ID.ToString(), (Convert.ToDouble(CurrentDataPoint.locationZ) + yoffset), (Convert.ToDouble(CurrentDataPoint.locationX) + xoffset), Convert.ToDouble(CurrentDataPoint.width), Convert.ToDouble(CurrentDataPoint.height), SoD.SODProjector.ImageToBase64(img, img.RawFormat), ".png", "info", 
+                            SoD.SODProjector.DrawImageOnWindow(window.Value.ID.ToString(), (Convert.ToDouble(data_point_z.Text) + yoffset), (Convert.ToDouble(data_point_x.Text) + xoffset), 0.75, 0.75, SoD.SODProjector.ImageToBase64(img, img.RawFormat), ".png", "info",
                                 (elementID) =>
                                 {
                                     persistent = SoD.SODProjector.room.Elements[elementID];
@@ -674,8 +698,7 @@ namespace PPStudyController
                         }
                     }
                 }
-            });
-
+            }));
         }
 
         private void SendInformationFromDisplay()
