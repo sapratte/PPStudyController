@@ -344,7 +344,7 @@ namespace PPStudyController
         int CurrentTask = 0;
         int CurrentRound = 0;
         int AttemptNumber = 0;
-        int personID = 0;
+        string personID = "";
 
         bool demo_mode = false;
 
@@ -750,7 +750,7 @@ namespace PPStudyController
                     // get participant location
                     for (int i = 0; i < people.Count; i++)
                     {
-                        if (people[i].ID == person_id.Text)
+                        if (people[i].ID == personID)
                         {
                             participant = people[i];
                             callback(participant);
@@ -797,7 +797,7 @@ namespace PPStudyController
 
         private void set_person_button_Click(object sender, RoutedEventArgs e)
         {
-            personID = Convert.ToInt32(person_id.Text);
+            personID = person_id.Text;
         }
     }
 }
