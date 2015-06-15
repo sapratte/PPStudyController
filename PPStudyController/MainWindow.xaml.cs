@@ -561,7 +561,7 @@ namespace PPStudyController
                 {
                     foreach (KeyValuePair<string, Projector.Window> window in s.Value.windows)
                     {
-                        SoD.SODProjector.DrawLineOnWindow(window.Value.ID, (participant.location.Z + yoffset), (participant.location.X + xoffset), (Convert.ToDouble(CurrentDisplay.Value.locationZ) + yoffset), (Convert.ToDouble(CurrentDisplay.Value.locationX) + xoffset), "1:1:1:1", 10, "line", 
+                        SoD.SODProjector.DrawLineOnWindow(window.Value.ID, (participant.location.Z + yoffset), (participant.location.X + xoffset), (Convert.ToDouble(CurrentDisplay.Value.locationZ) + yoffset), (Convert.ToDouble(CurrentDisplay.Value.locationX) + xoffset), "0.30:1:0.30:1", 10, "line", 
                             (elementID) => {
                             // send to display
                             if (CurrentTask == 1)
@@ -617,7 +617,7 @@ namespace PPStudyController
             {
                 if (element.Value.name == "info")
                 {
-                    SoD.SODProjector.TransferElementWithSpeed.Fast(element.Value.type, element.Value.ID, Convert.ToDouble(p1), Convert.ToDouble(p2), (data) => 
+                    SoD.SODProjector.TransferElementWithSpeed.Slow(element.Value.type, element.Value.ID, Convert.ToDouble(p1), Convert.ToDouble(p2), (data) => 
                     {
                         // remove
                         RemoveImage(data);
